@@ -1,0 +1,109 @@
+<div class="container">
+  <p *ngIf="this.actRoute.snapshot.params.id && !idProduto"><em>Carregando...</em></p>
+  <p *ngIf="submitted"><em>Enviando...</em></p>
+  <div>
+    <h1>{{onlyView ? "Visualizar" : (!this.actRoute.snapshot.params.id ? "Cadastrar" : "Atualizar")}} Produto</h1>
+    <form (ngSubmit)="onSubmit(dataForm)" #dataForm="ngForm">
+      <div class="form-group" *ngIf="this.actRoute.snapshot.params.id">
+        <label for="alterEgo">Id Produto</label>
+        <input type="text" class="form-control" id="alterEgo" [readonly]="this.actRoute.snapshot.params.id" [value]="idProduto"
+               [(ngModel)]="idProduto" name="alterEgo">
+      </div>
+
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" id="nome"
+               required
+               [readonly]="onlyView"
+               [(ngModel)]="nomeProduto" name="nome" [value]="nomeProduto"
+               #nome="ngModel">
+        <div *ngIf="nome.errors && nome.errors['invalid']" class="alert alert-danger">
+          {{nome.errors['invalid']}}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" class="form-control" id="descricao"
+               required
+               [readonly]="onlyView"
+               [(ngModel)]="descricaoProduto" name="descricao" [value]="descricaoProduto"
+               #descricao="ngModel">
+        <div *ngIf="descricao.errors && descricao.errors['invalid']" class="alert alert-danger">
+          {{descricao.errors['invalid']}}
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="!onlyView; else elseBlock">
+        <label for="preco">Preço</label>
+        <input type="text" class="form-control" id="preco"
+               required
+               [readonly]="onlyView"
+               [(ngModel)]="precoProduto" name="preco" [value]="precoProduto"
+               currencyMask [options]="{align: 'left', allowNegative: 'false', prefix: 'R$ ', thousands: '.', decimal: ',' }"
+               #preco="ngModel">
+        <div *ngIf="preco.errors && preco.errors['invalid']" class="alert alert-danger">
+          {{preco.errors['invalid']}}
+        </div>
+      </div>
+
+      <ng-template #elseBlock>
+        <div class="form-group">
+          <label for="preco">Preço</label>
+          <input type="text" class="form-control" id="preco"
+                required
+                [readonly]="onlyView"
+                [(ngModel)]="precoProduto" name="preco" [value]="precoProduto"
+                #preco="ngModel">
+          <div *ngIf="preco.errors && preco.errors['invalid']" class="alert alert-danger">
+            {{preco.errors['invalid']}}
+          </div>
+        </div>
+    </ng-template>
+
+      <div class="form-group">
+        <label for="quantidade">Quantidade</label>
+        <input type="number" class="form-control" id="quantidade"
+               required
+               [readonly]="onlyView"
+               [(ngModel)]="quantidadeProduto" name="quantidade" [value]="quantidadeProduto"
+               #quantidade="ngModel">
+        <div *ngIf="quantidade.errors && quantidade.errors['invalid']" class="alert alert-danger">
+          {{quantidade.errors['invalid']}}
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="categorias">
+        <label for="idCategoria">Categoria</label>
+        <select class="form-control" id="idCategoria"
+                required
+                [disabled]="onlyView"
+                [(ngModel)]="idCategoriaProduto" name="idCategoria" 
+                (change)="onOptionsSelected($event)"
+                #idCategoria="ngModel">
+          <option *ngFor="let categoria of categorias" [ngValue]="categoria.id" [selected]="categoria.id == idCategoriaProduto">{{categoria.nome}}</option>
+        </select>
+        <div [hidden]="idCategoria.valid || idCategoria.pristine" class="alert alert-danger">
+          Categoria é obrigatória
+        </div>
+      </div>
+
+      <button *ngIf="!onlyView" type="submit" class="btn btn-success" [disabled]="!dataForm.form.valid">{{!this.actRoute.snapshot.params.id ? "Cadastrar Produto" : "Atualizar Produto"}}</button>
+      <button type="button" class="btn btn-default" style="margin-left: 7px;" (click)="onRedirect(); dataForm.reset()">Voltar</button>
+    </form>
+  </div>
+
+  <!-- <div [hidden]="!submitted">
+    <h2>Resumo do produto que você está cadastrando:</h2>
+    <div class="row">
+      <div class="col-xs-2"><b>Nome:</b></div>
+      <div class="col-xs-10">{{ nomeProduto }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-2"><b>Categoria: </b></div>
+      <div class="col-xs-10">{{ DescricaoCategoriaProduto }}</div>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="onRedirect()">Ok</button>
+  </div> -->
+</div>

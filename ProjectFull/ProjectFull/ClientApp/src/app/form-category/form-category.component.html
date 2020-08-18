@@ -1,0 +1,41 @@
+<div class="container">
+  <p *ngIf="this.actRoute.snapshot.params.id && !idCategoria"><em>Carregando...</em></p>
+  <p *ngIf="submitted"><em>Enviando...</em></p>
+  <div>
+    <h1>{{onlyView ? "Visualizar" : (!this.actRoute.snapshot.params.id ? "Cadastrar" : "Atualizar")}} Categoria</h1>
+    <form (ngSubmit)="onSubmit(dataCategoryForm)" #dataCategoryForm="ngForm">
+      <div class="form-group" *ngIf="this.actRoute.snapshot.params.id">
+        <label for="alterEgo">Id Categoria</label>
+        <input type="text" class="form-control" id="alterEgo" [readonly]="this.actRoute.snapshot.params.id" [value]="idCategoria"
+               [(ngModel)]="idCategoria" name="alterEgo">
+      </div>
+
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" class="form-control" id="nome"
+               required
+               [readonly]="onlyView"
+               [(ngModel)]="nomeCategoria" name="nome" [value]="nomeCategoria"
+               #nome="ngModel">
+        <div *ngIf="nome.errors && nome.errors['invalid']" class="alert alert-danger">
+          {{nome.errors['invalid']}}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" class="form-control" id="descricao"
+               required
+               [readonly]="onlyView"
+               [(ngModel)]="descricaoCategoria" name="descricao" [value]="descricaoCategoria"
+               #descricao="ngModel">
+        <div *ngIf="descricao.errors && descricao.errors['invalid']" class="alert alert-danger">
+          {{descricao.errors['invalid']}}
+        </div>
+      </div>
+
+      <button *ngIf="!onlyView" type="submit" class="btn btn-success" [disabled]="!dataCategoryForm.form.valid">{{!this.actRoute.snapshot.params.id ? "Cadastrar Categoria" : "Atualizar Categoria"}}</button>
+      <button type="button" class="btn btn-default" style="margin-left: 7px;" (click)="onRedirect(); dataCategoryForm.reset()">Voltar</button>
+    </form>
+  </div>
+</div>

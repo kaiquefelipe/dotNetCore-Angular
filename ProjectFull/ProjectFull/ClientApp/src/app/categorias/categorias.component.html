@@ -1,0 +1,30 @@
+<div class="content">
+  <h1 id="tableLabel">Categorias</h1>
+  <button type="button" class="btn btn-default" (click)="NewCategory()">Nova Categoria</button>
+</div>
+<p *ngIf="!categorias"><em>Carregando...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="categorias">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nome</th>
+      <th>Descrição</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let categoria of categorias">
+      <td>{{ categoria.id }}</td>
+      <td>{{ categoria.nome }}</td>
+      <td>{{ categoria.descricao }}</td>
+      <td>
+        <span class="contentAcction">
+          <a class="nav-link text-dark" [routerLink]="['/formulariocategoria', categoria.id, 1]"[attr.title]="'Visualizar Categoria ' + categoria.id"><fa name="eye"></fa></a>
+          <a class="nav-link text-dark" [routerLink]="['/formulariocategoria', categoria.id, 0]" [attr.title]="'Editar Categoria ' + categoria.id"><fa name="edit"></fa></a>
+          <a class="nav-link text-dark" (click)="DeleteCategory(categoria.id, categoria.nome)" [attr.title]="'Deletar Categoria ' + categoria.id"><fa name="trash" class="colorTrash"></fa></a>
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>

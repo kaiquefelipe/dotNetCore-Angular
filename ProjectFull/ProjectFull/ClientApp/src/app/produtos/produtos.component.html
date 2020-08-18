@@ -1,0 +1,35 @@
+<div class="content">
+  <h1 id="tableLabel">Produtos</h1>
+  <button type="button" class="btn btn-default" (click)="NewProduct()">Novo Produto</button>
+</div>
+
+<p *ngIf="!produtos"><em>Carregando...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="produtos">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nome</th>
+      <th>Descrição</th>
+      <th>Quantidade</th>
+      <th>Preço</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let produto of produtos">
+      <td>{{ produto.id }}</td>
+      <td>{{ produto.nome }}</td>
+      <td>{{ produto.descricao }}</td>
+      <td>{{ produto.quantidade }}</td>
+      <td>{{ this.FormatPrice(produto.preco) }}</td>
+      <td>
+        <span class="contentAcction">
+          <a class="nav-link text-dark" [routerLink]="['/formulario', produto.id, 1]"[attr.title]="'Visualizar Produto ' + produto.id"><fa name="eye"></fa></a>
+          <a class="nav-link text-dark" [routerLink]="['/formulario', produto.id, 0]" [attr.title]="'Editar Produto ' + produto.id"><fa name="edit"></fa></a>
+          <a class="nav-link text-dark" (click)="DeleteProduct(produto.id, produto.nome)" [attr.title]="'Deletar Produto ' + produto.id"><fa name="trash" class="colorTrash"></fa></a>
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>

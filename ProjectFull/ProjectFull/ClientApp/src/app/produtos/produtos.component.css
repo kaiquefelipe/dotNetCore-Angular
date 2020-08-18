@@ -1,0 +1,35 @@
+.content {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.content h1 {
+    margin-top: 0;
+}
+
+.content button {
+    margin-left: 15px;
+    border: 1px solid #42A948;
+    color: #42A948;
+    border-radius: 7px;
+    padding: 4px 12px!important;
+    line-height: normal;
+}
+
+.contentAcction {
+    display: flex;
+}
+
+.contentAcction a {
+    padding-top: 0;
+    cursor: pointer;
+}
+
+.colorEdit {
+    color: #007bff;
+}
+
+.colorTrash {
+    color: #dc3545;
+}
